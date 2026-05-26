@@ -587,11 +587,11 @@ body {
 
 .stat-sub {
   font-family: var(--font-mono);
-  font-size: 9px;
-  font-weight: 400;
+  font-size: 10.5px;
+  font-weight: 500;
   color: var(--ink-3);
   letter-spacing: 0.04em;
-  margin-top: 2px;
+  margin-top: 3px;
 }
 .stat-sub .currency {
   font-size: 0.9em;

@@ -395,13 +395,13 @@
       `Round ${index + 1} of ${TOTAL_STEPS} · ${year.sublabel || ''}`;
     document.getElementById('round-heading').textContent = year.label;
 
-    // Reset stat strip — both the £bn hero and the per-£100 sub-stat per cell.
-    document.querySelector('#stat-top6 .stat-value-number').textContent = '0';
-    document.querySelector('#stat-top6 .stat-sub-number').textContent = '0.00';
-    document.querySelector('#stat-debt .stat-value-number').textContent = '0';
-    document.querySelector('#stat-debt .stat-sub-number').textContent = '0.00';
-    document.querySelector('#stat-civic .stat-value-number').textContent = '0';
-    document.querySelector('#stat-civic .stat-sub-number').textContent = '0.00';
+    // Reset stat strip — per-£100 is the hero, £bn UK total is the sub-stat.
+    document.querySelector('#stat-top6 .stat-value-number').textContent = '0.00';
+    document.querySelector('#stat-top6 .stat-sub-number').textContent = '0';
+    document.querySelector('#stat-debt .stat-value-number').textContent = '0.00';
+    document.querySelector('#stat-debt .stat-sub-number').textContent = '0';
+    document.querySelector('#stat-civic .stat-value-number').textContent = '0.00';
+    document.querySelector('#stat-civic .stat-sub-number').textContent = '0';
 
     const insight = document.getElementById('insight');
     insight.classList.add('is-hidden');
@@ -499,12 +499,13 @@
         els[i].classList.add('is-revealed', `is-${s.group}`);
         els[i].setAttribute('aria-label', s.name);
       });
-      statTop6.textContent = moneyBn(top6Bn);
-      statTop6Sub.textContent = money(top6Total);
-      statDebt.textContent = moneyBn(debtBn);
-      statDebtSub.textContent = money(debtTotal);
-      statCivic.textContent = moneyBn(civicBn);
-      statCivicSub.textContent = money(civicTotalVal);
+      // Per-£100 = hero (big), £bn UK total = sub (small)
+      statTop6.textContent = money(top6Total);
+      statTop6Sub.textContent = moneyBn(top6Bn);
+      statDebt.textContent = money(debtTotal);
+      statDebtSub.textContent = moneyBn(debtBn);
+      statCivic.textContent = money(civicTotalVal);
+      statCivicSub.textContent = moneyBn(civicBn);
       showInsight();
     }
 
@@ -521,34 +522,35 @@
           el.classList.add('is-revealed', `is-${s.group}`);
           el.setAttribute('aria-label', s.name);
 
+          // Per-£100 = hero (big), £bn UK total = sub (small)
           if (s.group === 'debt') {
             debtRevealed++;
             const isLast = debtRevealed === debtCount;
-            statDebt.textContent = moneyBn(isLast ? debtBn : debtRevealed * perDebtBn);
-            statDebtSub.textContent = money(isLast ? debtTotal : debtRevealed * perDebt);
+            statDebt.textContent = money(isLast ? debtTotal : debtRevealed * perDebt);
+            statDebtSub.textContent = moneyBn(isLast ? debtBn : debtRevealed * perDebtBn);
             vibrate(10);
           }
           if (topSixCats.has(s.name)) {
             top6Revealed++;
             const isLast = top6Revealed === top6Count;
-            statTop6.textContent = moneyBn(isLast ? top6Bn : top6Revealed * perTop6Bn);
-            statTop6Sub.textContent = money(isLast ? top6Total : top6Revealed * perTop6);
+            statTop6.textContent = money(isLast ? top6Total : top6Revealed * perTop6);
+            statTop6Sub.textContent = moneyBn(isLast ? top6Bn : top6Revealed * perTop6Bn);
           }
           if (s.group === 'civic') {
             civicRevealed++;
             const isLast = civicRevealed === civicCount;
-            statCivic.textContent = moneyBn(isLast ? civicBn : civicRevealed * perCivicBn);
-            statCivicSub.textContent = money(isLast ? civicTotalVal : civicRevealed * perCivic);
+            statCivic.textContent = money(isLast ? civicTotalVal : civicRevealed * perCivic);
+            statCivicSub.textContent = moneyBn(isLast ? civicBn : civicRevealed * perCivicBn);
           }
 
           totalRevealed++;
           if (totalRevealed === 100) {
-            statTop6.textContent = moneyBn(top6Bn);
-            statTop6Sub.textContent = money(top6Total);
-            statDebt.textContent = moneyBn(debtBn);
-            statDebtSub.textContent = money(debtTotal);
-            statCivic.textContent = moneyBn(civicBn);
-            statCivicSub.textContent = money(civicTotalVal);
+            statTop6.textContent = money(top6Total);
+            statTop6Sub.textContent = moneyBn(top6Bn);
+            statDebt.textContent = money(debtTotal);
+            statDebtSub.textContent = moneyBn(debtBn);
+            statCivic.textContent = money(civicTotalVal);
+            statCivicSub.textContent = moneyBn(civicBn);
             showInsight();
           }
         }, step * 22);
