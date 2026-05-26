@@ -24,8 +24,8 @@ Built as a Logos London Circle campaign asset on the UK national debt. Designed 
 ## Run locally
 
 ```bash
-git clone https://github.com/roxanneen/ip3-studio.git
-cd ip3-studio
+git clone https://github.com/roxanneen/the-spending-game.git
+cd the-spending-game
 python3 -m http.server 8000
 ```
 
