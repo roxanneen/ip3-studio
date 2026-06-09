@@ -1,5 +1,5 @@
 /* ============================================================
-   The Spending Game — styles (Roboto, Union Jack palette on white)
+   The Spending Game — styles (Roboto, multi-country palette injected at runtime)
    ============================================================ */
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -13,15 +13,18 @@
   --ink-2: #4A4A52;
   --ink-3: #8B8B92;
   --rule: #DDDDD9;
-  /* Union Jack palette */
-  --alarm: #C8102E;         /* UK flag red — used for Debt + all campaign accents */
+  /* Default palette (UK / Union Jack) — overridden at runtime by JS when a
+     country is picked. Variables are set on documentElement.style so they
+     cascade through the whole document. */
+  --alarm: #C8102E;
   --alarm-soft: #FBE5E8;
   --alarm-deep: #6E0917;
-  --major-blue: #012169;    /* UK flag blue — Top 6 */
+  --major-blue: #012169;
   --major-blue-soft: #E1E5F2;
-  --civic-white: #FFFFFF;   /* UK flag white — Civic (sparse highlights) */
-  --gray-light: #C0BAAB;    /* warm neutral for Everything Else */
-  --gray: #6B6862;          /* retained for occasional use */
+  --civic-white: #FFFFFF;
+  --gray-light: #C0BAAB;
+  --gray: #6B6862;
+  --ring-rgb: 200, 16, 46;  /* RGB triplet for the @keyframes ring glow */
 
   --font: 'Roboto', system-ui, -apple-system, sans-serif;
   --font-mono: 'Roboto Mono', ui-monospace, 'SF Mono', monospace;
@@ -30,7 +33,7 @@
   --pad-x: 20px;
 }
 
-/* Dark-mode override removed — the Union Jack palette reads best on pure white. */
+/* Dark-mode override removed — the country palettes all read best on pure white. */
 
 html, body {
   background: var(--paper);
@@ -533,8 +536,8 @@ body {
 }
 
 @keyframes ring {
-  0%   { box-shadow: 0 0 0 0 rgba(200, 16, 46, 0.7); }
-  100% { box-shadow: 0 0 0 10px rgba(200, 16, 46, 0); }
+  0%   { box-shadow: 0 0 0 0 rgba(var(--ring-rgb), 0.7); }
+  100% { box-shadow: 0 0 0 10px rgba(var(--ring-rgb), 0); }
 }
 
 /* ---------- 3-stat strip ---------- */
@@ -1187,6 +1190,149 @@ body {
 .site-footer-data {
   font-size: 10.5px;
 }
+
+/* ---------- Country picker (Phase 7) ---------- */
+
+.screen-picker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 48px var(--pad-x) 64px;
+}
+
+.picker {
+  width: 100%;
+  max-width: var(--max-w);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.picker-title {
+  font-family: var(--font);
+  font-weight: 900;
+  font-size: 34px;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.picker-sub {
+  font-family: var(--font);
+  font-weight: 400;
+  font-size: 17px;
+  color: var(--ink-2);
+  margin: 0 0 8px;
+}
+
+.picker-prompt {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-top: 16px;
+}
+
+.picker-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.picker-tile {
+  appearance: none;
+  border: 1px solid var(--rule);
+  background: var(--paper);
+  padding: 22px 14px 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  font: inherit;
+  cursor: pointer;
+  transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+  border-radius: 4px;
+}
+.picker-tile:hover,
+.picker-tile:focus-visible {
+  transform: translateY(-2px);
+  border-color: var(--ink-2);
+  background: var(--paper-2);
+  outline: none;
+}
+
+.picker-flag {
+  font-size: 38px;
+  line-height: 1;
+}
+
+.picker-name {
+  font-family: var(--font);
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+
+.picker-foot {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-top: 24px;
+}
+
+/* Back-to-picker affordance below the cover CTA */
+.btn-text {
+  appearance: none;
+  border: none;
+  background: none;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  cursor: pointer;
+  margin-top: 14px;
+  padding: 6px 10px;
+}
+.btn-text:hover { color: var(--ink); }
+
+/* ---------- USD equivalent (China / Japan only) ---------- */
+
+.usd-equiv {
+  font-size: 0.7em;
+  font-weight: 400;
+  color: var(--ink-3);
+  letter-spacing: -0.005em;
+  margin-left: 2px;
+  white-space: nowrap;
+}
+
+.stat.is-debt .usd-equiv,
+.takeaway-card-debt .usd-equiv {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* ---------- Per-country contrast overrides ---------- */
+
+/* China: major colour is yellow #FFDE00 — yellow text on white fails contrast.
+   The colour identity lives in the square fill + soft-yellow tile backgrounds;
+   text uses ink. */
+[data-country="china"] .stat.is-major .stat-label { color: var(--ink-2); }
+[data-country="china"] .stat.is-major .stat-value { color: var(--ink); }
+[data-country="china"] .stat.is-major .stat-sub { color: var(--ink-3); opacity: 1; }
+[data-country="china"] .cover-callout-major .cover-callout-amount { color: var(--ink); }
+[data-country="china"] .cover-callout-major .cover-callout-name { color: var(--ink-2); }
+[data-country="china"] .takeaway-card-major .takeaway-pct,
+[data-country="china"] .takeaway-card-major .takeaway-name { color: var(--ink); }
+[data-country="china"] .takeaway-card-major .takeaway-bn { color: var(--ink-2); opacity: 1; }
 
 /* ---------- Utility ---------- */
 

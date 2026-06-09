@@ -5,32 +5,39 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#FFFFFF">
   <title>The Spending Game</title>
-  <meta name="description" content="A 60-second game following where each £100 of UK tax goes.">
+  <meta name="description" content="A 60-second game following where every tax bill goes — UK, US, France, Italy.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,400;1,700&family=Roboto+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=12">
 </head>
 <body>
   <div class="app">
     <header class="masthead" aria-label="The Spending Game">
       <span class="masthead-dot" aria-hidden="true"></span>
       <span class="masthead-title">The Spending Game</span>
-      <a class="masthead-credit" href="https://logos.co/circles" target="_blank" rel="noopener">Logos London Circle</a>
     </header>
 
+    <!-- PICKER — first screen, shown until a country is selected -->
+    <section class="screen screen-picker" data-screen="picker" aria-labelledby="picker-heading">
+      <div class="picker">
+        <h1 class="picker-title" id="picker-heading">The Spending Game</h1>
+        <p class="picker-sub">Where does every tax bill go to?</p>
+        <p class="picker-prompt">Pick a country to begin.</p>
+        <div class="picker-grid" id="picker-grid" role="group" aria-label="Choose a country"></div>
+        <p class="picker-foot">60 seconds. Four countries. One question.</p>
+      </div>
+    </section>
+
     <!-- COVER — animated intro -->
-    <section class="screen screen-cover" data-screen="cover" aria-labelledby="cover-heading">
+    <section class="screen screen-cover is-hidden" data-screen="cover" aria-labelledby="cover-heading">
       <div class="cover">
-        <h1 class="cover-headline" id="cover-heading">
-          Where does every <em>£100</em> tax bill go to?
-        </h1>
-
+        <h1 class="cover-headline" id="cover-heading">Where does every tax bill go to?</h1>
         <div class="cover-stage">
-          <div class="grid cover-grid" id="cover-grid" aria-label="Where £100 of UK tax goes"></div>
+          <div class="grid cover-grid" id="cover-grid" aria-label="Tax bill grid"></div>
         </div>
-
         <button class="btn btn-primary cover-cta" id="cta-start" type="button">Follow the journey <span class="arrow" aria-hidden="true">→</span></button>
+        <button class="btn btn-text cover-back" id="cta-back-to-picker" type="button">← Pick a different country</button>
       </div>
     </section>
 
@@ -47,30 +54,30 @@
       </div>
       <p class="eyebrow" id="round-eyebrow">Round 1 of 7</p>
       <h2 class="screen-headline" id="round-heading">2021</h2>
-      <p class="screen-prompt" id="round-prompt">Tap any square to see how the £100 splits, and what the UK's total bill looks like.</p>
-      <div class="grid" id="grid" role="group" aria-label="100 squares representing £100 of UK tax"></div>
+      <p class="screen-prompt" id="round-prompt"></p>
+      <div class="grid" id="grid" role="group" aria-label="100 squares"></div>
       <div class="stats" aria-live="polite">
         <div class="stat is-major" id="stat-top6">
-          <span class="stat-label">Top 6</span>
+          <span class="stat-label" id="stat-top6-label">Top 6</span>
           <span class="stat-value"><span class="currency" aria-hidden="true">£</span><span class="stat-value-number">0.00</span></span>
-          <span class="stat-sub"><span class="currency" aria-hidden="true">£</span><span class="stat-sub-number">0</span>bn UK total</span>
+          <span class="stat-sub"><span class="currency" aria-hidden="true">£</span><span class="stat-sub-number">0</span><span class="stat-sub-suffix">bn total</span></span>
         </div>
         <div class="stat is-debt" id="stat-debt">
-          <span class="stat-label">Debt Interest</span>
+          <span class="stat-label" id="stat-debt-label">Debt</span>
           <span class="stat-value"><span class="currency" aria-hidden="true">£</span><span class="stat-value-number">0.00</span></span>
-          <span class="stat-sub"><span class="currency" aria-hidden="true">£</span><span class="stat-sub-number">0</span>bn UK total</span>
+          <span class="stat-sub"><span class="currency" aria-hidden="true">£</span><span class="stat-sub-number">0</span><span class="stat-sub-suffix">bn total</span></span>
         </div>
         <div class="stat is-civic" id="stat-civic">
-          <span class="stat-label">Civic Space</span>
+          <span class="stat-label" id="stat-civic-label">Civic</span>
           <span class="stat-value"><span class="currency" aria-hidden="true">£</span><span class="stat-value-number">0.00</span></span>
-          <span class="stat-sub"><span class="currency" aria-hidden="true">£</span><span class="stat-sub-number">0</span>bn UK total</span>
+          <span class="stat-sub"><span class="currency" aria-hidden="true">£</span><span class="stat-sub-number">0</span><span class="stat-sub-suffix">bn total</span></span>
         </div>
       </div>
       <div class="insight is-hidden" id="insight">
         <p class="insight-text" id="insight-text"></p>
       </div>
-      <div class="top5 is-hidden" id="top5" aria-label="Top 6 spending lines per £100 of tax">
-        <p class="top5-eyebrow">Top 6 lines · per £100 of tax</p>
+      <div class="top5 is-hidden" id="top5" aria-label="Top 6 spending lines">
+        <p class="top5-eyebrow" id="top5-eyebrow-static">Top 6 lines</p>
         <ol class="top5-list" id="top5-list"></ol>
       </div>
       <button class="btn btn-primary is-hidden" id="cta-next" type="button">Next year <span class="arrow" aria-hidden="true">→</span></button>
@@ -87,53 +94,49 @@
         <span class="progress-dot is-done"></span>
         <span class="progress-dot is-current"></span>
       </div>
-      <p class="eyebrow">Your turn · OBR forecasts to 2030</p>
+      <p class="eyebrow" id="predict-eyebrow">Your turn</p>
       <h2 class="screen-headline" id="predict-heading">Where will the bill go <em>next?</em></h2>
-      <p class="screen-prompt">Your guess for the UK's total debt-interest bill in <strong>2030</strong>. Drag, then lock it in.</p>
+      <p class="screen-prompt" id="predict-prompt"></p>
       <div class="predict-card">
         <div class="predict-value" aria-live="polite">
-          <span class="currency" aria-hidden="true">£</span><span id="predict-number">115</span><span class="predict-unit">bn</span>
+          <span class="currency" aria-hidden="true">£</span><span id="predict-number">0</span><span class="predict-unit" id="predict-unit">bn</span>
+          <span class="usd-equiv" id="predict-number-usd"></span>
         </div>
-        <input class="slider" id="slider" type="range" min="0" max="200" step="5" value="115" aria-label="Your guess for the 2030 UK debt-interest bill, in pounds billion">
-        <div class="slider-marks" aria-hidden="true">
-          <span>£0</span>
-          <span>£100bn</span>
-          <span>£200bn</span>
+        <input class="slider" id="slider" type="range" min="0" max="200" step="5" value="115" aria-label="Your guess">
+        <div class="slider-marks" id="slider-marks" aria-hidden="true">
+          <span></span><span></span><span></span>
         </div>
       </div>
-      <div class="reference" aria-label="Reference points">
-        <div class="ref-cell"><span class="ref-year">2021</span><span class="ref-val"><span class="currency" aria-hidden="true">£</span>73bn</span></div>
-        <div class="ref-cell"><span class="ref-year">2024 peak</span><span class="ref-val"><span class="currency" aria-hidden="true">£</span>125bn</span></div>
-        <div class="ref-cell"><span class="ref-year">2026 proj</span><span class="ref-val"><span class="currency" aria-hidden="true">£</span>115bn</span></div>
-      </div>
+      <div class="reference" id="reference" aria-label="Reference points"></div>
       <button class="btn btn-primary" id="cta-lock" type="button">Lock in my guess <span class="arrow" aria-hidden="true">→</span></button>
     </section>
 
     <!-- END -->
     <section class="screen screen-end is-hidden" data-screen="end" aria-labelledby="end-heading">
       <div class="hero-block">
-        <p class="eyebrow">2030 projection · OBR Nov 2025 EFO</p>
+        <p class="eyebrow" id="end-eyebrow"></p>
         <div class="hero-number" id="end-heading">
-          <span class="currency" aria-hidden="true">£</span><span id="hero-value">0</span><span class="hero-unit">bn</span>
+          <span class="currency" aria-hidden="true">£</span><span id="hero-value">0</span><span class="hero-unit" id="hero-unit">bn</span>
+          <span class="usd-equiv" id="hero-usd"></span>
         </div>
-        <p class="hero-caption">the UK's projected debt interest bill in 2030</p>
+        <p class="hero-caption" id="hero-caption"></p>
       </div>
       <div class="insight insight-block">
         <p id="comparison-text"></p>
-        <p>Five years ago this bill was £73 billion. Now it's £125bn. OBR thinks it'll be £130bn by 2030. Nearly double in one decade alone. Spread across 33 million UK taxpayers, that's about £3,800 each, every year.</p>
+        <p id="end-insight-text"></p>
       </div>
-      <div class="trajectory" aria-label="UK debt interest bill across nine years">
-        <p class="trajectory-eyebrow">UK debt interest, £bn · 2021 → 2030</p>
+      <div class="trajectory" aria-label="Debt trajectory">
+        <p class="trajectory-eyebrow" id="trajectory-eyebrow"></p>
         <div class="trajectory-list" id="trajectory-list"></div>
       </div>
-      <div class="shift-card" aria-label="Shift from 2021 baseline to 2030 projection">
+      <div class="shift-card" aria-label="Shift from baseline to projection">
         <div class="shift-row">
-          <span class="shift-year">2021 baseline</span>
-          <span class="shift-val"><span class="currency" aria-hidden="true">£</span>73<span class="shift-unit">bn</span></span>
+          <span class="shift-year" id="shift-baseline-year">baseline</span>
+          <span class="shift-val"><span class="currency" aria-hidden="true">£</span><span id="shift-baseline-val">0</span><span class="shift-unit" id="shift-baseline-unit">bn</span> <span class="usd-equiv" id="shift-baseline-usd"></span></span>
         </div>
         <div class="shift-row shift-row-final">
-          <span class="shift-year">2030 projection</span>
-          <span class="shift-val"><span class="currency" aria-hidden="true">£</span><span id="shift-final">130</span><span class="shift-unit">bn</span></span>
+          <span class="shift-year" id="shift-final-year">projection</span>
+          <span class="shift-val"><span class="currency" aria-hidden="true">£</span><span id="shift-final">0</span><span class="shift-unit" id="shift-final-unit">bn</span> <span class="usd-equiv" id="shift-final-usd"></span></span>
         </div>
         <p class="shift-summary" id="shift-summary"></p>
       </div>
@@ -146,58 +149,53 @@
       <div class="secondary-ctas">
         <button class="btn btn-secondary" id="cta-replay" type="button">Play again</button>
       </div>
-      <footer class="footnote">
-        Sources: HMRC Annual Tax Summary (2021–22, 2022–23, 2024–25 partial). 2023–24 splits interpolated pending HMRC publication. 2025 / 2026 / 2030 figures derived from the OBR Economic and Fiscal Outlook (November 2025) applied to the Annual Tax Summary allocation methodology.
-      </footer>
+      <footer class="footnote" id="end-footnote"></footer>
     </section>
 
     <!-- TAKEAWAYS — final stats + shareable cards -->
     <section class="screen screen-takeaways is-hidden" data-screen="takeaways" aria-labelledby="takeaways-heading">
       <p class="eyebrow">The takeaways</p>
-      <h2 class="screen-headline" id="takeaways-heading">Now you know where the <em>£100</em> goes.</h2>
+      <h2 class="screen-headline" id="takeaways-heading"></h2>
       <p class="screen-prompt">Three numbers that tell the story. Share whichever one lands hardest.</p>
 
       <div class="takeaway-cards">
         <article class="takeaway-card takeaway-card-major">
           <div class="takeaway-stat">
-            <span class="takeaway-pct">79<span class="takeaway-pct-sym" aria-hidden="true">%</span></span>
-            <span class="takeaway-bn"><span class="currency" aria-hidden="true">£</span>800bn a year</span>
+            <span class="takeaway-pct"></span>
+            <span class="takeaway-bn"></span>
           </div>
-          <h3 class="takeaway-name">Absorbed by 6 departments</h3>
-          <p class="takeaway-detail">Health, Welfare, Pensions, Education, Debt Interest, Defence. Almost everything else competes for what's left.</p>
+          <h3 class="takeaway-name"></h3>
+          <p class="takeaway-detail"></p>
           <button class="btn btn-secondary takeaway-share" data-card="major" type="button">Share on X</button>
         </article>
 
         <article class="takeaway-card takeaway-card-debt">
           <div class="takeaway-stat">
-            <span class="takeaway-pct">12<span class="takeaway-pct-sym" aria-hidden="true">%</span></span>
-            <span class="takeaway-bn"><span class="currency" aria-hidden="true">£</span>125bn a year</span>
+            <span class="takeaway-pct"></span>
+            <span class="takeaway-bn"></span>
           </div>
-          <h3 class="takeaway-name">Debt interest alone</h3>
-          <p class="takeaway-detail">About £3,800 per UK taxpayer, every year. To fund past decisions, not today's needs.</p>
+          <h3 class="takeaway-name"></h3>
+          <p class="takeaway-detail"></p>
           <button class="btn btn-secondary takeaway-share" data-card="debt" type="button">Share on X</button>
         </article>
 
         <article class="takeaway-card takeaway-card-civic">
           <div class="takeaway-stat">
-            <span class="takeaway-pct">4<span class="takeaway-pct-sym" aria-hidden="true">%</span></span>
-            <span class="takeaway-bn"><span class="currency" aria-hidden="true">£</span>40bn a year</span>
+            <span class="takeaway-pct"></span>
+            <span class="takeaway-bn"></span>
           </div>
-          <h3 class="takeaway-name">Reaches civic society</h3>
-          <p class="takeaway-detail">Libraries, parks, culture, the environment. Combined. Out of more than a trillion pounds of UK spending.</p>
+          <h3 class="takeaway-name"></h3>
+          <p class="takeaway-detail"></p>
           <button class="btn btn-secondary takeaway-share" data-card="civic" type="button">Share on X</button>
         </article>
       </div>
 
       <div class="secondary-ctas">
-        <a class="btn btn-secondary" href="mailto:uk@logos.co">Get in touch</a>
-        <a class="btn btn-secondary is-disabled" id="cta-learn-takeaways" aria-disabled="true" role="link">Logos UK #comingsoon</a>
+        <a class="btn btn-secondary is-hidden" id="cta-learn-takeaways" role="link">Read the campaign</a>
         <button class="btn btn-secondary" id="cta-replay-takeaways" type="button">Play again</button>
       </div>
 
-      <footer class="footnote">
-        £-billion figures rounded from HMRC Annual Tax Summary (2022–23, 2023–24) and OBR Nov 2025 EFO Total Managed Expenditure projections.
-      </footer>
+      <footer class="footnote" id="takeaways-footnote"></footer>
     </section>
 
     <footer class="site-footer">
@@ -206,22 +204,19 @@
         <span class="site-footer-sep" aria-hidden="true">·</span>
         <span class="site-footer-credit">
           Created by
-          <a href="https://x.com/ip3studio" target="_blank" rel="noopener">IP3 Studio</a>
+          <a href="https://ip3.studio" target="_blank" rel="noopener">IP3 Studio</a>
         </span>
       </div>
-      <div class="site-footer-row site-footer-data">
-        <span class="site-footer-label">Data:</span>
-        <a href="https://www.gov.uk/government/publications/how-public-spending-was-calculated-in-your-tax-summary" target="_blank" rel="noopener">HMRC Annual Tax Summary</a>
+      <div class="site-footer-row site-footer-data" id="site-sources"></div>
+      <div class="site-footer-row site-footer-links">
+        <a href="https://x.com/ip3studio" target="_blank" rel="noopener">X</a>
         <span class="site-footer-sep" aria-hidden="true">·</span>
-        <a href="https://obr.uk/efo/economic-and-fiscal-outlook-november-2025/" target="_blank" rel="noopener">OBR EFO Nov 2025</a>
+        <a href="https://github.com/IP3-Studio" target="_blank" rel="noopener">GitHub</a>
         <span class="site-footer-sep" aria-hidden="true">·</span>
-        <a href="https://www.gov.uk/government/collections/public-expenditure-statistical-analyses-pesa" target="_blank" rel="noopener">UK PESA</a>
-      </div>
-      <div class="site-footer-row">
-        <a class="site-footer-fork" href="https://github.com/roxanneen/the-spending-game/" target="_blank" rel="noopener">GitHub</a>
+        <a href="mailto:contact@ip3.studio">Contact</a>
       </div>
     </footer>
   </div>
-  <script src="app.js"></script>
+  <script src="app.js?v=12"></script>
 </body>
 </html>
