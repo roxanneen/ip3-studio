@@ -1092,10 +1092,12 @@ body {
 }
 
 .takeaway-share {
-  align-self: flex-start;
-  width: auto;
+  align-self: stretch;
+  width: 100%;
   padding: 10px 18px;
-  margin-top: 4px;
+  margin-top: auto;     /* pin to card bottom so all 3 align across equal-height cards */
+  text-align: center;
+  justify-content: center;
 }
 
 /* Per-card colour treatments */
