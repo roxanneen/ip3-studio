@@ -265,8 +265,8 @@
         headline: 'Now you know where the <em>$100</em> goes.',
         footnote: '$-billion figures rounded from Treasury Combined Statement (FY2021–FY2025) and CBO Feb 2026 baseline.',
         cards: {
-          major: { pct: '86', bn: '$5.8tn a year', name: 'Absorbed by 6 federal lines', detail: 'Social Security, Health, Defense, Net Interest, Income Security, Veterans. Everything else competes for what\'s left.' },
-          debt: { pct: '13', bn: '$1tn a year', name: 'Net interest alone', detail: 'More than the Pentagon. More than Medicare. About $8,500 per US taxpayer.' },
+          major: { pct: '86', bn: '$5.8T a year', name: 'Absorbed by 6 federal lines', detail: 'Social Security, Health, Defense, Net Interest, Income Security, Veterans. Everything else competes for what\'s left.' },
+          debt: { pct: '13', bn: '$1T a year', name: 'Net interest alone', detail: 'More than the Pentagon. More than Medicare. About $8,500 per US taxpayer.' },
           civic: { pct: '24¢', bn: '$16bn a year', name: 'Reaches civic society', detail: 'EPA, parks, Smithsonian, arts and libraries combined. Less than a quarter on every $100.', pctCustom: true },
         },
       },
@@ -277,7 +277,7 @@
       ],
       tweets: {
         main: "US federal net interest was $352bn in 2021. It's $1 trillion now. CBO projects $1.4 trillion by 2030.\n\nNearly 4× in a decade. For a line nobody campaigns on.",
-        major: "86% of every $100 in US federal tax goes to just six lines: Social Security, Health, Defense, Net Interest, Income Security, Veterans.\n\nAbout $5.8tn a year.",
+        major: "86% of every $100 in US federal tax goes to just six lines: Social Security, Health, Defense, Net Interest, Income Security, Veterans.\n\nAbout $5.8T a year.",
         debt: "13% of every $100 in US federal tax goes to net interest. $1 trillion a year. More than the Pentagon. More than Medicare.",
         civic: "24¢ of every $100 in US federal tax reaches civic society: EPA, parks, Smithsonian, arts and libraries combined.\n\nAbout $16bn out of $6.8 trillion in federal spending.",
       },
@@ -420,7 +420,7 @@
         headline: 'Now you know where the <em>€100</em> goes.',
         footnote: '€-billion figures from INSEE general-government accounts (COFOG basis). Top 6 functions confirmed via Eurostat. 2026 figures from PLF 2026 / HCFP projection.',
         cards: {
-          major: { pct: '93', bn: '€1.5tn a year', name: 'Absorbed by 6 functions', detail: "Social Protection, Health, General Public Services, Economic Affairs, Education, civic life. Defence and debt interest share what's left." },
+          major: { pct: '93', bn: '€1.5T a year', name: 'Absorbed by 6 functions', detail: "Social Protection, Health, General Public Services, Economic Affairs, Education, civic life. Defence and debt interest share what's left." },
           debt: { pct: '4', bn: '€76bn a year', name: 'Debt interest', detail: "Doubled in 5 years,€38bn (2021) → €76bn (PLF 2026). Still 'only' 4% of public spending. For now." },
           civic: { pct: '7', bn: '€115bn a year', name: 'Reaches civic life', detail: 'Environment, housing, culture, recreation. Combined. Bigger than Defence and Debt interest combined.' },
         },
@@ -432,7 +432,7 @@
       ],
       tweets: {
         main: "France's debt interest was €38bn in 2021.\nIt's €76bn now (PLF 2026 budget).\nTrajectory points to €115bn by 2030.\n\nDoubled in 5 years. Defence rising alongside. Both lines climbing.",
-        major: "93% of every €100 in French public spending goes to just six functions: Social Protection, Health, General Public Services, Economic Affairs, Education, civic life.\n\nAbout €1.5tn a year. Defence and debt interest share what's left.",
+        major: "93% of every €100 in French public spending goes to just six functions: Social Protection, Health, General Public Services, Economic Affairs, Education, civic life.\n\nAbout €1.5T a year. Defence and debt interest share what's left.",
         debt: "France's debt interest doubled in 5 years: €38bn (2021) → €76bn (PLF 2026).\n\nStill 'only' 4% of public spending, for now. Banque de France projections keep climbing through 2030.",
         civic: "€7 of every €100 in French public spending reaches civic life, environment, housing, culture, recreation. Combined.\n\nThat's bigger than Defence (€3) and debt interest (€4) combined. For now.",
       },
