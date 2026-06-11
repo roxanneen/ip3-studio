@@ -101,12 +101,18 @@ body {
   flex: 1;
 }
 
-.masthead-credit {
-  color: var(--ink-3);
+.masthead-cta {
+  flex-shrink: 0;
+  background: var(--ink);
+  color: var(--paper);
   text-decoration: none;
-  transition: color 0.15s ease;
+  padding: 7px 13px;
+  border-radius: 4px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  transition: background 0.15s ease;
 }
-.masthead-credit:hover { color: var(--ink); }
+.masthead-cta:hover { background: var(--alarm); }
 
 @keyframes pulse {
   0%, 100% { opacity: 1; transform: scale(1); }
@@ -1210,6 +1216,7 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 12px;
+  text-align: center;
 }
 
 .picker-title {
@@ -1221,13 +1228,25 @@ body {
   color: var(--ink);
 }
 
-.picker-sub {
+.picker-lead {
+  font-family: var(--font);
+  font-weight: 700;
+  font-size: 19px;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin-top: 2px;
+}
+
+.picker-body {
   font-family: var(--font);
   font-weight: 400;
-  font-size: 17px;
+  font-size: 14.5px;
+  line-height: 1.55;
   color: var(--ink-2);
-  margin: 0 0 8px;
+  max-width: 42ch;
 }
+.picker-body strong { color: var(--ink); font-weight: 700; }
 
 .picker-prompt {
   font-family: var(--font-mono);
