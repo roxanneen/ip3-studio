@@ -1470,7 +1470,13 @@
   function buildTweet(card) {
     const c = state.country;
     const body = card ? c.tweets[card] || c.tweets.main : c.tweets.main;
-    return body + '\n\n' + SHARE_URL + '\n\n@logos_network @ip3studio';
+    // Country-specific share link so recipients open the same country's game,
+    // not the generic picker.
+    const base = (typeof location !== 'undefined' && /^https?:/.test(location.protocol))
+      ? location.origin + location.pathname
+      : 'https://spendinggame.xyz/';
+    const url = base + (state.countryId ? '?country=' + state.countryId : '');
+    return body + '\n\n' + url + '\n\n@Logos_network @ip3studio';
   }
 
   function shareToX(card) {
