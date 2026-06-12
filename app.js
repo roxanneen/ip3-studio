@@ -1470,7 +1470,7 @@
   function buildTweet(card) {
     const c = state.country;
     const body = card ? c.tweets[card] || c.tweets.main : c.tweets.main;
-    return body + '\n\n' + SHARE_URL + '\n\n@Logos_network';
+    return body + '\n\n' + SHARE_URL + '\n\n@logos_network @ip3studio';
   }
 
   function shareToX(card) {
